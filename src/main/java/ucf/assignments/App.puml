@@ -1,0 +1,56 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+
+class Item
+{
+    -description
+    -dueDate
+    -isCompleted
+    +Item(description, dueDate, isCompleted)
+    +display()
+    +setDescription()
+    +setDueDate()
+    +setIsCompleted()
+    +delete()
+    +save()
+    +load()
+    +getDescription()
+    +getDueDate()
+    +getIsCompleted()
+}
+class List
+{
+    -title
+    -items
+    +List(title)
+    +display()
+    +setTitle()
+    +addItem()
+    +removeItem()
+    +getItem()
+    +delete()
+    +save()
+    +load()
+    +getTitle()
+}
+class ListCollection
+{
+     -title
+     -lists
+     +Lists(title)
+     +display()
+     +setTitle()
+     +addList()
+     +removeList()
+     +getList()
+     +delete()
+     +save()
+     +load()
+     +getTitle()
+
+}
+Lists "1" *-- "many" List
+List "1" *-- "many" Item
+
+@enduml

@@ -1,0 +1,78 @@
+Collection of to due lists.
+we need to be able to add a new list and to make sure it is unique (How do we decide whether or not a list is unique?)
+Need to be able to see all of the lists.
+Edit and remove a list.
+Need to be able to chose a list to remove it and be able to remove it.
+In what order?
+
+A single list:
+Has a name (list)
+so we just be able to edit and make a list.
+A list is a collection of items.
+We must be able to see all of the items.
+In what order?
+Edit and remove an item.
+
+Item:
+Item has a description.
+Item has a due date YYYY-MM-DD.
+Item has a completed indication.
+Have to be able to create an item.
+Have to be able to edit an item.
+Need to be able to delete an item.
+We need to be able to display an item.
+
+A user shall be able to add a new todo list:
+Given a Lists container and a newly created List, L insert L into the container. This means to ensure List L is
+unique to the container so its not a duplicate (comparing list L title to the other titles). If its not unique then cause an error.
+
+A user shall be able to remove an existing todo list:
+Given a Lists container (LC) and the title of a List, L locate L within LC and remove it from LC and destroy it.
+[Do we always want to destroy it? or is it possible we would want to move it to another container?]
+
+A user shall be able to edit the title of an existing todo list:
+Given a Lists container (LC) support replacing the title with a new title.
+[Do we want to be able to edit in place or are we going to separate the UI from the classes that are taking care of the model.]
+
+A user shall be able to add a new item to an existing todo list:
+Given a List L support adding a new item I to L. Ensure I is unique to L otherwise report an error.
+
+A user shall be able to remove an item from an existing todo list:
+Given a list L and an item title I remove the item from a list and destroy it.
+[Are we always going to be able to destroy it or will we support moving it from one list to another.]
+
+A user shall be able to edit the description of an item within an existing todo list:
+Given a Item support replacing the description with a new description.
+[Do we want to be able to edit in place or are we going to separate the UI from the classes that are taking care of the model.]
+
+A user shall be able to edit the due date of an item within an existing todo list:
+Given a Item support replacing the due date with a new due date.
+[Do we want to be able to edit in place or are we going to separate the UI from the classes that are taking care of the model.]
+
+A user shall be able to mark an item in a todo list as complete:
+Given a Item support replacing the completeness with a new completeness.
+[Do we want to be able to edit in place or are we going to separate the UI from the classes that are taking care of the model.]
+
+A user shall be able to display all of the existing items in a todo list:
+We want to be able to get all of the items in a to due list in a printable form, which means given a to due list it returns an array of strings.
+[Do we want to do this in a fixed nature or do we want to support multiple forms of the list.]
+
+A user shall be able to display only the incompleted items in a todo list:
+This is an example of another filtering of the output above.
+
+A user shall be able to display only the completed items in a todo list:
+This is an example of another filtering of the output above.
+
+A user shall be able to save all of the items in a single todo list to external storage:
+We should support saving and restoring a to due list to a file.
+
+A user shall be able to save all of the items across all of the todo lists to external storage:
+[Do we want to make a container saving a container by creating a directory and saving the individual to due lists as files within the directory]
+
+A user shall be able to load a single todo list that was previously saved to external storage:
+We should support saving and restoring a to due list to a file.
+[Do we want to make a container saving a container by creating a directory and saving the individual to due lists as files within the directory]
+
+A user shall be able to load multiple todo lists that were previous saved to external storage:
+We should support saving and restoring a to due list to a file.
+[Do we want to make a container saving a container by creating a directory and saving the individual to due lists as files within the directory]
