@@ -3,6 +3,7 @@ package ucf.assignments;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 //+Item(description, dueDate, isCompleted)
 //    +display()
@@ -14,9 +15,9 @@ import java.util.Date;
 //    +load()
 public class Item {
     private String description;
-    private Date dueDate;
+    private GregorianCalendar dueDate;
     private Boolean isCompleted;
-    public Item(String description, Date dueDate, Boolean isCompleted)
+    public Item(String description, GregorianCalendar dueDate, Boolean isCompleted)
     {
         this.description = description;
         this.dueDate = dueDate;
@@ -32,11 +33,14 @@ public class Item {
     {
         return description;
     }
-    public Date getDueDate()
+    public GregorianCalendar getDueDate()
     {
 
         return dueDate;
 
+    }
+    public void changeDate( GregorianCalendar newDate){
+        this.dueDate = newDate;
     }
     public Boolean getIsCompleted()
     {
