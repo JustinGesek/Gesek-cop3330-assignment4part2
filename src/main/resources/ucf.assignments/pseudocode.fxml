@@ -35,7 +35,7 @@
 </GridPane>
 -->
 
-<GridPane fx:id="daboss" alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucf.assignments.Pseudocode">
+<GridPane fx:id="daboss" alignment="center" hgap="10" prefHeight="458.0" prefWidth="1329.0" vgap="10" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ucf.assignments.Pseudocode">
     <padding><Insets bottom="40" left="4" right="4" top="4" /></padding>
     <columnConstraints>
         <ColumnConstraints halignment="RIGHT" maxWidth="Infinity" minWidth="50" prefWidth="50">
@@ -186,10 +186,13 @@
             </VBox>
         </content>
     </ScrollPane>
-    <Button mnemonicParsing="false" prefHeight="48.0" prefWidth="106.0" text="New item" onAction="#createNewItemHandler" GridPane.columnIndex="4" GridPane.rowIndex="8" />
+    <Button fx:id="itemButton" mnemonicParsing="false" onAction="#createNewItemHandler" prefHeight="48.0" prefWidth="106.0" text="New item" GridPane.columnIndex="4" GridPane.rowIndex="8" />
    <TextField fx:id="ListName" text="Title" GridPane.columnIndex="5" GridPane.rowIndex="4" />
    <Button mnemonicParsing="false" onAction="#showListHandler" prefHeight="31.0" prefWidth="72.0" text="Show Lists" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-   <TextField fx:id="itemName" text="areaItem" GridPane.columnIndex="5" GridPane.rowIndex="8" />
+    <VBox GridPane.columnIndex="5" GridPane.rowIndex="8">
+       <TextField fx:id="itemName" text="areaItem" />
+       <DatePicker fx:id="itemDate" />
+    </VBox>
 
 
 </GridPane>

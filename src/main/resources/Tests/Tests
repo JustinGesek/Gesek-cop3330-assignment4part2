@@ -1,0 +1,66 @@
+A user shall be able to add a new todo list:
+Verify todo list is present on the page as per the design on the web page.
+Verify width and height for the todo list.
+
+A user shall be able to remove an existing todo list:
+Verify todo list is present on the page as per the design on the web page.
+
+A user shall be able to edit the title of an existing todo list:
+Verify there is actually a title already
+Verify width and height for the todo list.
+Verify that the title can be edited.
+
+A user shall be able to add a new item to an existing todo list:
+Verify there is already an item on the screen
+Verify button is enabled/clickable or not by clicking on the item.
+
+
+A user shall be able to remove an item from an existing todo list:
+Find the previous node of the node to be deleted.
+Change the next of the previous node.
+Free memory for the node to be deleted.
+
+
+A user shall be able to edit the description of an item within an existing todo list:
+Verify there is a description already
+Verify you can edit the description
+Verify when you edit the description it saves it.
+
+A user shall be able to edit the due date of an item within an existing todo list:
+Verify there is a due date already
+Verify you can edit the due date
+Verify when you edit the due date it saves it.
+
+A user shall be able to mark an item in a todo list as complete:
+Verify there is a due date already
+Verify you can edit the due date
+Verify when you edit the due date it saves it.
+
+A user shall be able to display all of the existing items in a todo list:
+Verify there is a todo list already
+Verify you can edit the todo list
+Verify when you edit the todo list it saves it.
+
+A user shall be able to display only the incomplete items in a todo list:
+Verify there is a todo list already
+Verify you can edit the todo list
+Verify when you edit the todo list it saves it.
+
+A user shall be able to display only the completed items in a todo list:
+Verify there is a todo list already
+Verify you can edit the todo list
+Verify when you edit the todo list it saves it.
+
+A user shall be able to save all of the items in a single todo list to external storage:
+Verify there is external storage and iterate though 100+ lists to make sure it can hold it all.
+
+A user shall be able to save all of the items across all of the todo lists to external storage:
+Verify there is external storage and iterate though 100+ lists to make sure it can hold it all.
+
+
+A user shall be able to load a single todo list that was previously saved to external storage:
+Verify there is external storage and iterate though 100+ lists to make sure it can hold it all.
+
+
+A user shall be able to load multiple todo lists that were previous saved to external storage:
+Verify there is external storage and iterate though 100+ lists to make sure it can hold it all.
