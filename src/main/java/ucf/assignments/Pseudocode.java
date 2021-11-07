@@ -15,6 +15,10 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -25,6 +29,8 @@ public class Pseudocode extends Application {
     static ListCollection myLists;
     boolean viewingLists = true;
     int listBeingViewed = -1;
+    int filterSelection = 0;
+    int fileAction = 0;
     public static void main(String[] args) {
         myLists = new ListCollection();
         Application.launch(args);
@@ -66,6 +72,18 @@ public class Pseudocode extends Application {
 
     }
 
+    public void clearCurrentList(ActionEvent actionEvent){
+        if (!viewingLists){
+            Button but = (Button) actionEvent.getTarget();
+
+            // use button to get the scene for lookups
+            scene = but.getScene();
+
+            myLists.lists.get(listBeingViewed).items.clear();
+            showItemsManual();
+        }
+    }
+
     public void createNewItemHandler(ActionEvent actionEvent) {
         if (!viewingLists){
             // get the button that called this handler
@@ -78,7 +96,7 @@ public class Pseudocode extends Application {
 
 
 
-            // get the desired name of the new list
+            // get the desired name of the new item
             TextField tf = (TextField) scene.lookup("#itemName");
             String itemName = tf.getText();
 
@@ -97,16 +115,29 @@ public class Pseudocode extends Application {
             }
             else {
                 int item_index = Integer.parseInt(but_text.split(" ")[2]) - 1;
-                Item item = new Item(itemName, itemDate, false);
+
+                // getting the item to know whether or not it's checked
+                VBox vb = (VBox) scene.lookup("#ScrollVBox");
+                HBox itemBox = (HBox) vb.getChildren().get(item_index) ;
+                CheckBox item_cb = (CheckBox) itemBox.lookup("#checkBox_" + item_index);
+
+                Item item = new Item(itemName, itemDate, item_cb.isSelected());
                 myLists.lists.get(listBeingViewed).items.set(item_index, item ) ;
                 // now change the display
-                VBox vb = (VBox) scene.lookup("#ScrollVBox");
+                //VBox vb = (VBox) scene.lookup("#ScrollVBox");
                 vb.getChildren().set(item_index, createItemDisplay(item, item_index )) ;
 
                 // then change back the button text
                 but.setText("New item");
             }
         }
+    }
+
+    public void filterChangedHandler(ActionEvent actionEvent){
+        ComboBox cb = (ComboBox) actionEvent.getTarget();
+        filterSelection =  cb.getSelectionModel().getSelectedIndex();
+
+        showItemsManual();
     }
 
     public void showListHandler(ActionEvent actionEvent) {
@@ -117,6 +148,104 @@ public class Pseudocode extends Application {
         scene = but.getScene();
 
         showListManual();
+    }
+
+    public void changeFileChoiceHandler(ActionEvent actionEvent){
+        ComboBox cb = (ComboBox) actionEvent.getTarget();
+        fileAction =  cb.getSelectionModel().getSelectedIndex();
+    }
+
+    public void fileExecutionHandler(ActionEvent actionEvent){
+        // extract file name
+        // get the button that called this handler
+        Button but = (Button) actionEvent.getTarget();
+        // use button to get the scene for lookups
+        scene = but.getScene();
+        TextField fileName = (TextField) scene.lookup("#filename");
+
+        if (fileAction == 0){  // saving a list to file
+            saveFile(fileName.getText());
+        }
+        else if (fileAction == 1){ // loading a list from file
+            loadFile(fileName.getText());
+            showListManual();
+        }
+    }
+
+    public void saveFile(String fileName){
+        BufferedWriter out = null;
+
+        try {
+            FileWriter fstream = new FileWriter(fileName, true); //true tells to append data.
+            out = new BufferedWriter(fstream);
+            // go thorugh each item in list and write to file
+            for (int i = 0; i < myLists.lists.get(listBeingViewed).items.size(); i++) {
+                Item curItem = myLists.lists.get(listBeingViewed).items.get(i);
+
+                GregorianCalendar calendar = curItem.getDueDate() ;
+                SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+                fmt.setCalendar(calendar);
+                String dateFormatted = fmt.format(calendar.getTime());
+
+                String itemText =curItem.getDescription() + "~" + dateFormatted + "~";
+
+                if (curItem.getIsCompleted())
+                    itemText += "TRUE";
+                else
+                    itemText += "FALSE";
+
+                out.write(itemText + "\n");
+            }
+            out.close();
+        }
+
+
+        catch (IOException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+    }
+
+    public void loadFile(String filename)  {
+        try {
+            File file = new File(
+                    filename);
+
+            BufferedReader br
+                    = new BufferedReader(new FileReader(file));
+
+            // Declaring a string variable
+            String st;
+
+
+            String listName = filename.replace(".txt", "");
+            // create new list
+            myLists.addList(listName);
+
+            List newList = myLists.lists.get(myLists.lists.size() - 1);
+            while ((st = br.readLine()) != null) {
+                String[] itemProperties = st.split("~");
+
+
+                //now create new item
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = df.parse(itemProperties[1]);
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(date);
+
+                GregorianCalendar itemDate = (GregorianCalendar) cal;
+                Boolean itemComp = true;
+                if (itemProperties[2].contains("F"))
+                    itemComp = false;
+
+                Item newItem = new Item(itemProperties[0], itemDate, itemComp);
+
+                newList.addItem(newItem);
+
+            }
+        }
+        catch (IOException | ParseException e){
+
+        }
     }
 
     public void showItemsHandler(Button but){
@@ -137,6 +266,17 @@ public class Pseudocode extends Application {
         itemButton.setText("Edit Item " + (numerical_id + 1));
 
     }
+
+    public void removeItemHanlder(Button removeBut){
+        String id = removeBut.getId();
+        int numerical_id = Integer.parseInt(id.split("_")[1]);
+        scene = removeBut.getScene();
+
+        myLists.lists.get(listBeingViewed).items.remove( numerical_id);
+        showItemsManual();
+    }
+
+
 
     public void showListManual(){
         VBox vb = (VBox) scene.lookup("#ScrollVBox");
@@ -173,8 +313,17 @@ public class Pseudocode extends Application {
         editItem.setId("editButton_" + i);
         editItem.setOnAction(action -> { editItemsHanlder(editItem); });
 
+        Button removeItem = new Button("Remove This Item");
+        removeItem.setId("removeButton_" + i);
+        removeItem.setOnAction(action -> { removeItemHanlder(removeItem); });
 
-        HBox hb = new HBox(label, editItem );
+        Label completed = new Label("Complete: ");
+        CheckBox cb = new CheckBox();
+        cb.setId("checkBox_" + i);
+
+        cb.setSelected(curItem.getIsCompleted());
+
+        HBox hb = new HBox(label, completed, cb, editItem, removeItem  );
 
         return hb;
     }
@@ -190,6 +339,10 @@ public class Pseudocode extends Application {
         for (int i =0 ; i < myLists.lists.get(listBeingViewed).items.size(); i++) {
 
             Item curItem =myLists.lists.get(listBeingViewed).items.get(i) ;
+            Boolean itemCompleted = curItem.getIsCompleted();
+            if (!itemCompleted && filterSelection == 1 ||
+                itemCompleted && filterSelection == 2)
+                continue ;
             HBox itemBox = createItemDisplay(curItem, i);
             vb.getChildren().add(itemBox);
         }

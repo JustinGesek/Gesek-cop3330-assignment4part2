@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.collections.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -66,16 +68,6 @@
         <RowConstraints />
         <RowConstraints />
     </rowConstraints>
-
-    <!-- Add Header Label -->
-    <Label text="Provide a title for this set of lists" GridPane.columnIndex="2" GridPane.columnSpan="1" GridPane.halignment="center" GridPane.rowIndex="0" GridPane.rowSpan="1">
-        <font>
-            <Font name="Arial" size="17" />
-        </font>
-        <GridPane.margin>
-            <Insets bottom="20" left="0" right="0" top="20" />
-        </GridPane.margin>
-    </Label>
 
     <!-- Add Header Label -->
     <Label text="COP3330 assignments" GridPane.columnIndex="2" GridPane.columnSpan="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.rowSpan="1">
@@ -193,6 +185,35 @@
        <TextField fx:id="itemName" text="areaItem" />
        <DatePicker fx:id="itemDate" />
     </VBox>
+   <Button mnemonicParsing="false" onAction="#clearCurrentList" text="Clear List" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+   <HBox prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="2">
+      <children>
+         <Label text="Filter Items:" />
+         <ComboBox id="FilterChoice" onAction="#filterChangedHandler" prefWidth="150.0" value="All">
+              <items>
+                  <FXCollections fx:factory="observableArrayList">
+                      <String fx:value="All" />
+                      <String fx:value="Completed" />
+                      <String fx:value="Incomplete" />
+                  </FXCollections>
+              </items>
+         </ComboBox>
+      </children>
+   </HBox>
+   <HBox prefHeight="30.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="2">
+      <children>
+          <ComboBox id="load/store" onAction="#changeFileChoiceHandler" prefWidth="100.0" value="STORE">
+              <items>
+                  <FXCollections fx:factory="observableArrayList">
+                      <String fx:value="STORE" />
+                      <String fx:value="LOAD" />
+                  </FXCollections>
+              </items>
+          </ComboBox>
+         <TextField id="filename" />
+         <Button id="goFile" mnemonicParsing="false"   onAction="#fileExecutionHandler" text="Go      " />
+      </children>
+   </HBox>
 
 
 </GridPane>

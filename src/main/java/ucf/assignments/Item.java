@@ -26,7 +26,7 @@ public class Item {
 
     public void setIsCompleted(Boolean completed)
     {
-
+        isCompleted = completed;
     }
 
     public String getDescription()
