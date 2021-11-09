@@ -1,0 +1,4 @@
+areaItem1~2021-12-11~FALSE
+areaItem4~2021-12-11~TRUE
+areaItem3~2021-12-11~FALSE
+areaItem88~2022-02-01~TRUE

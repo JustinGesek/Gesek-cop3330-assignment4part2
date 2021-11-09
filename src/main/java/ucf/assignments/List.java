@@ -18,7 +18,7 @@ import ucf.assignments.Item;
 //    +save()
 //    +load()
 //    +getTitle()
-class List {
+public class List {
     private String title;
     public ArrayList< Item> items;
 

@@ -10,6 +10,8 @@ module ucf.assignments {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires javafx.base;
+    requires kotlin.stdlib;
+    requires junit;
 
     opens ucf.assignments to javafx.fxml;
     exports ucf.assignments;

@@ -17,7 +17,7 @@ import java.util.Map;
 //     +save()
 //     +load()
 //     +getTitle()
-class ListCollection {
+public class ListCollection {
     private String title;
     public ArrayList< List> lists;
 

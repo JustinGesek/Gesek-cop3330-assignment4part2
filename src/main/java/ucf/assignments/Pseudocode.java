@@ -26,7 +26,7 @@ public class Pseudocode extends Application {
 
     Parent root ;
     Scene scene ;
-    static ListCollection myLists;
+    public static ListCollection myLists;
     boolean viewingLists = true;
     int listBeingViewed = -1;
     int filterSelection = 0;
@@ -64,12 +64,22 @@ public class Pseudocode extends Application {
             // get the desired name of the new list
             TextField tf = (TextField) scene.lookup("#ListName");
             String listName = tf.getText();
-            myLists.addList(listName);
+            tf.setText("");
+            addList(listName);
+
 
             showListManual();
         }
 
 
+    }
+
+    public void addList(String listName) {
+        for (List curList : myLists.lists){
+            if (curList.getTitle().equals(listName))
+                return;
+        }
+        myLists.addList(listName);
     }
 
     public void clearCurrentList(ActionEvent actionEvent){
@@ -99,6 +109,16 @@ public class Pseudocode extends Application {
             // get the desired name of the new item
             TextField tf = (TextField) scene.lookup("#itemName");
             String itemName = tf.getText();
+            if (itemName.equals("")){
+                return;
+            }
+
+            tf.setText("");
+
+            for (Item curItem : myLists.lists.get(listBeingViewed).items){
+                if (curItem.getDescription().equals(itemName))
+                    return;
+            }
 
             DatePicker dp = (DatePicker) scene.lookup("#itemDate");
             LocalDate date = dp.getValue();
@@ -168,6 +188,7 @@ public class Pseudocode extends Application {
         }
         else if (fileAction == 1){ // loading a list from file
             loadFile(fileName.getText());
+            viewingLists = true ;
             showListManual();
         }
     }
@@ -279,6 +300,7 @@ public class Pseudocode extends Application {
 
 
     public void showListManual(){
+        viewingLists = true ;
         VBox vb = (VBox) scene.lookup("#ScrollVBox");
         int numKids = vb.getChildren().size();
         vb.getChildren().remove(0, numKids);
