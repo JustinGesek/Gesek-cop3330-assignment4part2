@@ -10,8 +10,10 @@ class Item
     +Item(description, dueDate, isCompleted)
     +setDueDate()
     +setIsCompleted()
+    setDescription()
     +getDescription()
     +getDueDate()
+    +changeDate()
     +getIsCompleted()
 }
 class List
@@ -19,6 +21,7 @@ class List
     -title
     -items
     +List(title)
+    +getTitle()
     +setTitle()
     +addItem()
     +getItem()
