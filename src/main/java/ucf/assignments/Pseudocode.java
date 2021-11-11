@@ -184,10 +184,30 @@ public class Pseudocode extends Application {
         TextField fileName = (TextField) scene.lookup("#filename");
 
         if (fileAction == 0){  // saving a list to file
-            saveFile(fileName.getText());
+            String fileChoice = fileName.getText();
+            if (fileChoice != ""){
+                saveFile(fileChoice);
+            }
+            else {
+                for (int i = 0; i < myLists.lists.size(); i ++){
+                    listBeingViewed = i;
+                    saveFile(myLists.lists.get(i).getTitle() + ".txt");
+                }
+            }
+
         }
         else if (fileAction == 1){ // loading a list from file
-            loadFile(fileName.getText());
+            String loadSpec = fileName.getText();
+            if (loadSpec.contains(",")){
+                String[] filenames = loadSpec.split(",");
+                for (String name : filenames){
+                    loadFile(name);
+                }
+            }
+            else {
+                loadFile(loadSpec);
+            }
+
             viewingLists = true ;
             showListManual();
         }
@@ -297,6 +317,39 @@ public class Pseudocode extends Application {
         showItemsManual();
     }
 
+    public void removeListHanlder(Button removeBut){
+        String id = removeBut.getId();
+        int numerical_id = Integer.parseInt(id.split("_")[1]);
+        scene = removeBut.getScene();
+
+        myLists.lists.remove( numerical_id);
+        showListManual();
+    }
+
+    public void editTitleHanlder(Button editBut){
+        String id = editBut.getId();
+        int numerical_id = Integer.parseInt(id.split("_")[1]);
+        scene = editBut.getScene();
+        VBox vb = (VBox) scene.lookup("#ScrollVBox");
+        HBox hb = (HBox) vb.getChildren().get(numerical_id);
+
+        if (editBut.getText().contains("Edit")) {
+            TextField newTitle = new TextField();
+            newTitle.setId("newTitle_" + numerical_id);
+            hb.getChildren().add(newTitle);
+            editBut.setText("Save Title");
+        }
+        else {
+            TextField newTitleField = (TextField) scene.lookup("#newTitle_" + numerical_id);
+            String newTitle = newTitleField.getText();
+            myLists.lists.get(numerical_id).setTitle(newTitle);
+            editBut.setText("Edit Title");
+            hb.getChildren().remove(hb.getChildren().size() -1);
+            hb.getChildren().set(0, new Label(newTitle));
+        }
+
+    }
+
 
 
     public void showListManual(){
@@ -316,7 +369,16 @@ public class Pseudocode extends Application {
             showItems.setId("showButton_" + i);
             //EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() { showItemsHandler() };
             showItems.setOnAction(action -> { showItemsHandler(showItems); });
-            HBox hb = new HBox(label, showItems );
+
+            Button editTitle = new Button("Edit Title");
+            editTitle.setId("editButton_" + i);
+            editTitle.setOnAction(action -> { editTitleHanlder(editTitle); });
+
+            Button removeList = new Button("Remove This List");
+            removeList.setId("removeButton_" + i);
+            removeList.setOnAction(action -> { removeListHanlder(removeList); });
+
+            HBox hb = new HBox(label, showItems, editTitle,  removeList );
             vb.getChildren().add(hb);
         }
     }

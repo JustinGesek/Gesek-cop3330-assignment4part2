@@ -31,6 +31,10 @@ public class List {
         return title;
     }
 
+    public void setTitle(String newTitle){
+        title = newTitle;
+    }
+
     public void addItem(Item item) {
         items.add( item);
     }

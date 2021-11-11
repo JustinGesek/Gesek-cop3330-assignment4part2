@@ -33,12 +33,17 @@ public class Item {
     {
         return description;
     }
+
+    public void setDescription(String newDesc){
+        description = newDesc;
+    }
     public GregorianCalendar getDueDate()
     {
 
         return dueDate;
 
     }
+
     public void changeDate( GregorianCalendar newDate){
         this.dueDate = newDate;
     }
